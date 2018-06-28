@@ -18,8 +18,8 @@ export class Line extends Component {
 
   render() {
     return (
-      <div className={"line"} onClick={this.lineClick}>
-        {this.state.broken
+      <div className={"line-" + this.props.id} onClick={this.lineClick}>
+        {this.props.broken
           ? this.props.yin(this.state)
           : this.props.yang(this.state)}
         {}
