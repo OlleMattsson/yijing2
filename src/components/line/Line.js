@@ -4,7 +4,7 @@ export class Line extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...this.props
+      ...props
     };
     this.lineClick = this.lineClick.bind(this);
   }
@@ -13,6 +13,7 @@ export class Line extends Component {
     this.setState(prevState => ({
       broken: !prevState.broken
     }));
+    this.props.onChange(this.props.id);
   }
 
   render() {
