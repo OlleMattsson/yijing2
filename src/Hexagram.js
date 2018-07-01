@@ -1,16 +1,23 @@
 import React, { Component } from "react";
-import { Line } from "./components/line/Line";
+import Line from "./components/line/Line";
 import Yin from "./components/line/Yin";
 import Yang from "./components/line/Yang";
 import globals from "./globals";
+import {
+  fuxiToBinary,
+  binaryToKingWen,
+  binaryToFuxi
+} from "./lib/iching-helpers";
 
 export default class Hexagram extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sequence: [true, true, true, true, true, true],
+      fuxi: this.props.fuxi || 0,
+      sequence: [true, true, true, true, true, true], // broken: true / false
       changing: [false, false, false, false, false, false],
-      ...props // broken: true / false
+      interactive: false,
+      ...props
     };
     this.handleLineClick = this.handleLineClick.bind(this);
     this.handlePrevClick = this.handlePrevClick.bind(this);
@@ -23,8 +30,7 @@ export default class Hexagram extends Component {
 
   componentDidMount() {
     if (this.state.fuxi) {
-      console.log(this.state.fuxi);
-      const binary = this.fuxiToBinary(this.state.fuxi);
+      const binary = fuxiToBinary(this.state.fuxi);
       this.setState({ sequence: this.binaryToBool(binary) });
     }
   }
@@ -38,49 +44,15 @@ export default class Hexagram extends Component {
   }
 
   handlePrevClick() {
-    const prev = this.binaryToFuxi(this.state.sequence) - 1;
-    const prevBinary = this.fuxiToBinary(prev);
+    const prev = binaryToFuxi(this.state.sequence) - 1;
+    const prevBinary = fuxiToBinary(prev);
     this.setState({ sequence: this.binaryToBool(prevBinary) });
   }
 
   handleNextClick() {
-    const next = this.binaryToFuxi(this.state.sequence) + 1;
-    const nextBinary = this.fuxiToBinary(next);
+    const next = binaryToFuxi(this.state.sequence) + 1;
+    const nextBinary = fuxiToBinary(next);
     this.setState({ sequence: this.binaryToBool(nextBinary) });
-  }
-
-  fuxiToBinary(fuxi) {
-    // Number => Sequence<Array[Bool]>
-    // eg. 3 -> [0,0,0,0,1,1]
-    var bin = "",
-      arr = [],
-      length = 6;
-
-    while (length--) {
-      bin += (fuxi >> length) & 1;
-    }
-
-    arr = bin.split("");
-    return arr;
-  }
-
-  binaryToKingWen(source) {
-    // source: Array[<Bool>]
-    let kingWenSequence = globals.kingWenSequence;
-    if (source && source.length == 6) {
-      return kingWenSequence[this.binaryToFuxi(source)];
-    }
-  }
-
-  binaryToFuxi(source) {
-    return parseInt(
-      source
-        .map(broken => {
-          return broken ? 0 : 1;
-        })
-        .join(""),
-      2
-    );
   }
 
   binaryToBool(arr) {
@@ -112,20 +84,20 @@ export default class Hexagram extends Component {
 
     const controls = (
       <div>
-        <button onClick={this.handlePrevClick}>
-          &lt; &lt; {this.binaryToFuxi(this.state.sequence) - 1}{" "}
-        </button>
-        <button onClick={this.handleNextClick}>
-          {this.binaryToFuxi(this.state.sequence) + 1} &gt; &gt;
-        </button>
+        <button onClick={this.handlePrevClick}>&lt; &lt;</button>
+        <button onClick={this.handleNextClick}>&gt; &gt;</button>
       </div>
     );
 
     return (
-      <div>
+      <div className="hexagram">
         {lines}
-        <div>Fu Xi binary: {this.binaryToFuxi(this.state.sequence)}</div>
-        <div>King Wen: {this.binaryToKingWen(this.state.sequence)}</div>
+        <div className="fuxiLabel">
+          Fu Xi binary: {binaryToFuxi(this.state.sequence)}
+        </div>
+        <div className="kingwenLabel">
+          King Wen: {binaryToKingWen(this.state.sequence)}
+        </div>
 
         {this.props.withControls ? controls : null}
       </div>
