@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import "./Yin.css";
 
-export class Line extends Component {
+export default class Line extends Component {
   constructor(props) {
     super(props);
     this.state = {
