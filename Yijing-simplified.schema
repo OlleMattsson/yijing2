@@ -1,0 +1,44 @@
+﻿type File @model {
+  contentType: String!
+  createdAt: DateTime!
+  id: ID! @isUnique
+  name: String!
+  secret: String! @isUnique
+  size: Int!
+  updatedAt: DateTime!
+  url: String! @isUnique
+}
+
+type User @model {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+}
+
+type Hexagram @model {
+  createdAt: DateTime!
+  id: ID! @isUnique
+  updatedAt: DateTime!
+  kingwen: String
+  fuxi: String
+  html: String
+  nameMan: String
+  nameEng: String
+  above: String
+  below: String
+  description: String
+  judgement: String
+  image: String
+  line1Number: String
+  line1: String
+  line2Number: String
+  line2: String
+  line3Number: String
+  line3: String
+  line4Number: String
+  line4: String
+  line5Number: String
+  line5: String
+  line6Number: String
+  line6: String
+}
