@@ -25,10 +25,26 @@ export default class Hexagram extends Component {
   }
 
   componentDidUpdate() {
-    //console.log("update", this.state.sequence);
+    console.log("hexagramDidUpdate:", this.props.changing, this.state.changing);
+
+    if (this.props.fuxi !== this.state.fuxi) {
+      const binary = fuxiToBinary(this.props.fuxi);
+      this.setState({
+        sequence: this.binaryToBool(binary),
+        fuxi: this.props.fuxi
+      });
+    }
+
+    if (this.props.changing !== this.state.changing) {
+      this.setState({
+        changing: this.props.changing
+      });
+    }
   }
 
   componentDidMount() {
+    //console.log("hexagramDidMount", this.state.fuxi);
+
     if (this.state.fuxi) {
       const binary = fuxiToBinary(this.state.fuxi);
       this.setState({ sequence: this.binaryToBool(binary) });
@@ -65,6 +81,8 @@ export default class Hexagram extends Component {
     const sequenceCopy = Array.from(this.state.sequence);
     const changingCopy = Array.from(this.state.changing).reverse();
 
+    console.log("changingCopy", changingCopy);
+
     const lines = sequenceCopy.reverse().map((state, index) => {
       const id = this.state.sequence.length - 1 - index;
       return (
@@ -90,7 +108,7 @@ export default class Hexagram extends Component {
     );
 
     return (
-      <div className="hexagram">
+      <div className="hexagram" style={{ ...this.props.style }}>
         {lines}
         <div className="fuxiLabel">
           Fu Xi binary: {binaryToFuxi(this.state.sequence)}

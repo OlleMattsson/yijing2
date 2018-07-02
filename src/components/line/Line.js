@@ -6,8 +6,15 @@ export default class Line extends Component {
     super(props);
     this.state = {
       ...props
+      // changing: Array[Bool]
     };
     this.lineClick = this.lineClick.bind(this);
+  }
+
+  componentDidUpdate() {
+    if (this.props.changing !== this.state.changing) {
+      this.setState({ changing: this.props.changing });
+    }
   }
 
   lineClick() {
