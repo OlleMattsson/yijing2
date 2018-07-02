@@ -841,7 +841,7 @@ export default {
   "25": [
     {
       kingwen: "25",
-      fuxi: "29",
+      fuxi: "39",
       html: "&#19928;",
       nameMan: "Wu Wang",
       nameEng: "Innocence (The Unexpected)",
