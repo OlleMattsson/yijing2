@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import Line from "./components/line/Line";
-import Yin from "./components/line/Yin";
-import Yang from "./components/line/Yang";
-import globals from "./globals";
+import Line from "./line/Line";
+import Yin from "./line/Yin";
+import Yang from "./line/Yang";
+import globals from "../globals";
 import {
   fuxiToBinary,
   binaryToKingWen,
   binaryToFuxi
-} from "./lib/iching-helpers";
+} from "../lib/iching-helpers";
+import HexagramData from "./HexagramData";
 
 export default class Hexagram extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class Hexagram extends Component {
   }
 
   componentDidUpdate() {
-    console.log("hexagramDidUpdate:", this.props.changing, this.state.changing);
+    //console.log("hexagramDidUpdate:", this.props.changing, this.state.changing);
 
     if (this.props.fuxi !== this.state.fuxi) {
       const binary = fuxiToBinary(this.props.fuxi);
@@ -81,7 +82,7 @@ export default class Hexagram extends Component {
     const sequenceCopy = Array.from(this.state.sequence);
     const changingCopy = Array.from(this.state.changing).reverse();
 
-    console.log("changingCopy", changingCopy);
+    //console.log("changingCopy", changingCopy);
 
     const lines = sequenceCopy.reverse().map((state, index) => {
       const id = this.state.sequence.length - 1 - index;
@@ -118,6 +119,8 @@ export default class Hexagram extends Component {
         </div>
 
         {this.props.withControls ? controls : null}
+
+        <HexagramData fuxi={binaryToFuxi(this.state.sequence)} />
       </div>
     );
   }

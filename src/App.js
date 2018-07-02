@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Hexagram from "./Hexagram";
+import Hexagram from "./components/Hexagram";
 import {
   fuxiToBinary,
   binaryToKingWen,
@@ -10,6 +10,7 @@ import {
   convertToBinarySequence,
   getChanges
 } from "./lib/iching-helpers";
+
 class App extends Component {
   constructor() {
     super();
