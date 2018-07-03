@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import "./Yin.css";
 
 export default class Line extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ...props
-      // changing: Array[Bool]
     };
     this.lineClick = this.lineClick.bind(this);
   }

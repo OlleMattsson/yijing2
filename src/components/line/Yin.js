@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./Yin.css";
 
 export default class Yin extends Component {
   render() {

@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import "./App.css";
 import Hexagram from "./components/Hexagram";
 import {
-  fuxiToBinary,
-  binaryToKingWen,
-  binaryToFuxi,
   makeLineWithFourCoins,
   makeFutureHexagram,
   convertToBinarySequence,
   getChanges
 } from "./lib/iching-helpers";
+import { CSSTransition } from "react-transition-group";
+import Spinner from "./components/spinner/spinner";
 
 class App extends Component {
   constructor() {
@@ -24,7 +23,8 @@ class App extends Component {
       futureSequence: [],
       futureSequenceBinary: [],
       futureSequenceFuxi: 0,
-      changes: []
+      changes: [],
+      displayHexagrams: false
     };
 
     this.clickHandler = this.clickHandler.bind(this);
@@ -69,7 +69,8 @@ class App extends Component {
           nowSequenceFuxi: parseInt(nowSequenceBinary.join(""), 2),
           futureSequenceBinary,
           futureSequenceFuxi: parseInt(futureSequenceBinary.join(""), 2),
-          changes
+          changes,
+          displayHexagrams: true
         });
       });
     } catch (err) {
@@ -88,45 +89,31 @@ class App extends Component {
           className="changingHexagramContainer"
           style={{ display: "flex", flexDirection: "row" }}
         >
-          <Hexagram
-            style={{ flex: 1, margin: "10px" }}
-            fuxi={this.state.nowSequenceFuxi}
-            changing={this.state.changes}
-          />
-
-          <Hexagram
-            style={{ flex: 1, margin: "10px" }}
-            fuxi={this.state.futureSequenceFuxi}
-            changing={[false, false, false, false, false, false]}
-          />
+          {!this.state.displayHexagrams && <Spinner />}
+          <CSSTransition
+            classNames="hexagramTransitionContainer"
+            style={{ display: "flex", flexDirection: "row" }}
+            timeout={{ exit: 1000, enter: 500 }}
+            unmountOnExit
+            in={this.state.displayHexagrams}
+            onExited={() => this.setState(p => ({ transition: false }))}
+          >
+            <div style={{ display: "flex" }}>
+              <Hexagram
+                style={{ flex: 1, margin: "10px" }}
+                fuxi={this.state.nowSequenceFuxi}
+                changing={this.state.changes}
+              />
+              <Hexagram
+                style={{ flex: 1, margin: "10px" }}
+                fuxi={this.state.futureSequenceFuxi}
+                changing={[false, false, false, false, false, false]}
+                interactive
+                withControls
+              />
+            </div>
+          </CSSTransition>
         </div>
-
-        {/*
-
-
-      
-        <CSSTransition
-          classNames="example"
-          timeout={{ exit: 0, enter: 300 }}
-          unmountOnExit
-          in={this.state.displayHej && !this.state.transition}
-          onExited={() => this.setState(p => ({ transition: false }))}
-        >
-          <h1>Dirp</h1>
-        </CSSTransition>
-
-        <CSSTransition
-          classNames="example"
-          timeout={{ exit: 0, enter: 300 }}
-          unmountOnExit
-          in={!this.state.displayHej && !this.state.transition}
-          onExited={() => this.setState(p => ({ transition: false }))}
-        >
-          <h1>Durp =)</h1>
-        </CSSTransition>
-        
-        <button onClick={this.clickHandler}>state</button>
-        */}
       </div>
     );
   }

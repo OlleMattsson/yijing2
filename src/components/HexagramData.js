@@ -10,6 +10,7 @@ query gethex($fuxi: String!)
       fuxi
       nameEng
       description
+      judgement
     }
   }
 `);
@@ -44,7 +45,7 @@ export default class HexagramData extends Component {
           return (
             <div>
               <p>{content.nameEng}</p>
-              <p>{content.description}</p>
+              <p dangerouslySetInnerHTML={{ __html: content.description }} />
             </div>
           );
         }}
