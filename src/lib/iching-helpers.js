@@ -121,3 +121,9 @@ export const getChanges = (now, future) => {
     }
   });
 };
+
+export const binaryToBool = (arr) => {
+  return arr.map(el => {
+    return el === "1" ? false : true;
+  });
+}

@@ -51,10 +51,8 @@ class App extends Component {
         }
 
         futureSequence = makeFutureHexagram(nowSequence);
-
         nowSequenceBinary = convertToBinarySequence(nowSequence);
         futureSequenceBinary = convertToBinarySequence(futureSequence);
-
         changes = getChanges(nowSequenceBinary, futureSequenceBinary);
 
         this.setState({
@@ -73,21 +71,13 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate() {
-    //console.log("appDidUpdate:", this.state.changes);
-  }
-
   render() {
     return (
       <div className="App">
-        <div
-          className="changingHexagramContainer"
-          style={{ display: "flex", flexDirection: "row" }}
-        >
+        <div className="changingHexagramContainer" >
           {!this.state.displayHexagrams && <Spinner />}
           <CSSTransition
             classNames="hexagramTransitionContainer"
-            style={{ display: "flex", flexDirection: "row" }}
             timeout={{ exit: 1000, enter: 500 }}
             unmountOnExit
             in={this.state.displayHexagrams}
@@ -95,14 +85,11 @@ class App extends Component {
           >
             <div style={{ display: "flex" }}>
               <Hexagram
-                style={{ flex: 1, margin: "10px" }}
                 fuxi={this.state.nowSequenceFuxi}
                 changing={this.state.changes}
               />
               <Hexagram
-                style={{ flex: 1, margin: "10px" }}
                 fuxi={this.state.futureSequenceFuxi}
-                changing={[false, false, false, false, false, false]}
                 interactive
                 withControls
               />
