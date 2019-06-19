@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Line from "./line/Line";
 import Yin from "./line/Yin";
-import Yang from "./line/Yang";
+import {Yang} from "./line/Yang";
 import globals from "../globals";
 import {
   fuxiToBinary,
