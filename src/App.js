@@ -15,7 +15,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      displayHej: false,
       transition: false,
       randomNumbers: [],
       nowSequence: [],
@@ -27,12 +26,6 @@ class App extends Component {
       changes: [],
       displayHexagrams: false
     };
-
-    this.clickHandler = this.clickHandler.bind(this);
-  }
-
-  clickHandler() {
-    this.setState(p => ({ displayHej: !p.displayHej, transition: true }));
   }
 
   fetchRandomNumbers = async howmany => {
