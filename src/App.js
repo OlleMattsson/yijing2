@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Hexagram from "./components/Hexagram";
+import {Hexagram} from "./components/Hexagram";
 import {
   makeLineWithFourCoins,
   makeFutureHexagram,
