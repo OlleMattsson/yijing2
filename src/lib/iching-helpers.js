@@ -23,8 +23,8 @@ export const fuxiToBinary = fuxi => {
 export const binaryToFuxi = source => {
   return parseInt(
     source
-      .map(broken => {
-        return broken ? 0 : 1;
+      .map(isYang => {
+        return isYang ? 1 : 0;
       })
       .join(""),
     2
@@ -105,7 +105,7 @@ export const convertToBinarySequence = source => {
       case 13:
       case 14:
       case 15:
-        res[i] = 0;
+        res[i] = 1;
         break;
 
       // -----
@@ -117,7 +117,7 @@ export const convertToBinarySequence = source => {
       case 1:
       case 2:
       case 3:
-        res[i] = 1;
+        res[i] = 0;
         break;
       default:
         break;
