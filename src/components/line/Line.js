@@ -6,16 +6,15 @@ export default class Line extends Component {
     this.state = {
       ...props
     };
-    this.lineClick = this.lineClick.bind(this);
   }
 
   componentDidUpdate() {
-    if (this.props.changing !== this.state.changing) {
-      this.setState({ changing: this.props.changing });
+    if (this.props.isChanging !== this.state.isChanging) {
+      this.setState({ isChanging: this.props.isChanging });
     }
   }
 
-  lineClick() {
+  lineClick = () => {
     this.setState(prevState => ({
       broken: !prevState.broken
     }));
@@ -25,9 +24,10 @@ export default class Line extends Component {
   render() {
     return (
       <div className={"line-" + this.props.id} onClick={this.lineClick}>
-        {this.props.broken
-          ? this.props.yin(this.state)
-          : this.props.yang(this.state)}
+        {this.props.isYang
+          ? this.props.yang(this.state)
+          : this.props.yin(this.state)
+          }
         {}
       </div>
     );

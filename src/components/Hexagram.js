@@ -43,14 +43,14 @@ export const Hexagram = ({
   const reversedSequence = Array.from(sequence).reverse();
   const reversedChanging = Array.from(changing).reverse();
 
-  const lines = reversedSequence.map((state, index) => {
+  const lines = reversedSequence.map((isYang, index) => {
     const id = sequence.length - 1 - index;
     return (
       <Line
         id={id}
         key={id}
-        broken={state}
-        changing={reversedChanging[index]}
+        isYang={isYang}
+        isChanging={reversedChanging[index]}
         yin={props => <Yin {...props} />}
         yang={props => <Yang {...props} />}
         color={globals.lineColor}
