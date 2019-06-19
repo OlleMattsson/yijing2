@@ -1,8 +1,10 @@
 import globals from "../globals";
 
+
+// Convert a hexagram's fuxi value to it's corresponding binary sequence
+// Number => BinarySequence<Array[Bool]>
+// 3 -> [0,0,0,0,1,1]
 export const fuxiToBinary = fuxi => {
-  // Number => Sequence<Array[Bool]>
-  // eg. 3 -> [0,0,0,0,1,1]
   var bin = "",
     arr = [],
     length = 6;
@@ -15,14 +17,9 @@ export const fuxiToBinary = fuxi => {
   return arr;
 };
 
-export const binaryToKingWen = source => {
-  // source: Array[<Bool>]
-  let kingWenSequence = globals.kingWenSequence;
-  if (source && source.length === 6) {
-    return kingWenSequence[binaryToFuxi(source)];
-  }
-};
-
+// Convert a hexagram's binary sequence to it's corresponding fuxi value sequence
+// BinarySequence<Array[Bool]> => Number
+// [0,0,0,0,1,1] -> 3
 export const binaryToFuxi = source => {
   return parseInt(
     source
@@ -34,6 +31,20 @@ export const binaryToFuxi = source => {
   );
 };
 
+// Convert a hexagram's binary sequence to it's corresponding king wen value
+// BinarySequence<Array[Bool]> => Number
+// [0,0,0,0,1,1] -> 20
+export const binaryToKingWen = source => {
+  // source: Array[<Bool>]
+  let kingWenSequence = globals.kingWenSequence;
+  if (source && source.length === 6) {
+    return kingWenSequence[binaryToFuxi(source)];
+  }
+};
+
+
+// Make one of the hexagrams line with four random coin tosses from RNQG
+// Array[Number] => Number
 export const makeLineWithFourCoins = numbersArray => {
   var normalized = [],
     decimal;
@@ -78,6 +89,9 @@ export const makeFutureHexagram = nowSequence => {
   return futureSequence;
 };
 
+// Convert a seqauence of lines to a binary sequence of broken and unbroken lines
+// Array[Line] => Array[Bool]
+// (6) [5, 13, 13, 14, 2, 13] => [1, 0, 0, 0, 1, 0]
 export const convertToBinarySequence = source => {
   let res = [];
   for (var i = 0, l = source.length; i < l; i++) {
@@ -122,8 +136,10 @@ export const getChanges = (now, future) => {
   });
 };
 
-export const binaryToBool = (arr) => {
+// BinarySequence<Array[Number]> => BinarySequence<Array[Bool]>
+// [0,0,0,0,1,1] => [true, true, true, true, false, false]
+export const binaryToBool = arr => {
   return arr.map(el => {
     return el === "1" ? false : true;
   });
-}
+};
