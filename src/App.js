@@ -9,6 +9,7 @@ import {
 } from "./lib/iching-helpers";
 import { CSSTransition } from "react-transition-group";
 import Spinner from "./components/spinner/spinner";
+import mockedResponse from "./static/mockedQRNGResponse"
 
 class App extends Component {
   constructor() {
@@ -35,6 +36,7 @@ class App extends Component {
   }
 
   fetchRandomNumbers = async howmany => {
+    return mockedResponse;
     return await (await fetch(
       "https://qrng.anu.edu.au/API/jsonI.php?length=" + howmany + "&type=uint8"
     )).json();
