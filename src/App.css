@@ -2,6 +2,22 @@
   text-align: center;
 }
 
+.nav {
+
+}
+
+.nav li {
+  display: inline;
+}
+
+.nav a {
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
 .changingHexagramContainer {
   display: flex; 
   flex-direction: row;

@@ -13,21 +13,21 @@ import {
 import HexagramData from "./HexagramData";
 
 export const Hexagram = ({
-  initialFuxi /* Number */,
-  changing = new Array(6).fill(false) /* Array */,
-  interactive /* Bool */,
-  withControls /* Bool */
+  initialFuxi = 0,
+  changing = new Array(6).fill(false),
+  interactive = false,
+  withControls = false 
 }) => {
   // Fuxi (number) internal state
-  const [fuxi, setFuxi] = useState(initialFuxi || 0);
+  const [fuxi, setFuxi] = useState(initialFuxi);
 
   /*
     UI event Handlers
   */
   const handleLineClick = index => {
-    const currentBoolSequence = binaryToBool(fuxiToBinary(fuxi)); // number => |bool]
+    const currentBoolSequence = binaryToBool(fuxiToBinary(fuxi)); // number => Array|bool]
     currentBoolSequence[index] = !currentBoolSequence[index];
-    const nextFuxi = binaryToFuxi(boolToBinary(currentBoolSequence)); // bool => number
+    const nextFuxi = binaryToFuxi(boolToBinary(currentBoolSequence)); // Array[bool] => number
     setFuxi(nextFuxi);
   };
 

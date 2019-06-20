@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Hexagram } from "./components/Hexagram";
-import { makeHexagrams } from "./lib/makeHexagrams";
-import { fetchRandomNumbers } from "./lib/fetchRandomNumbers";
+import { Hexagram } from "../Hexagram";
+import { makeHexagrams } from "../../lib/makeHexagrams";
+import { fetchRandomNumbers } from "../../lib/fetchRandomNumbers";
 import { CSSTransition } from "react-transition-group";
-import Spinner from "./components/spinner/spinner";
-import "./App.css";
+import Spinner from "../spinner/spinner";
+import "../../App.css";
 
 const USE_MOCKED_DATA = false;
 
-const App = () => {
+export const Oracle = () => {
   const [displayHexagrams, setDisplayHexagrams] = useState(false);
   const [transition, setTransition] = useState(false);
-  const [nowSequenceFuxi, setNowSequenceFuxi] = useState(0);
-  const [futureSequenceFuxi, setFutureSequenceFuxi] = useState(0);
+  const [nowHexagram, setNowHexagram] = useState(0);
+  const [futureHexagram, setFutureHexagram] = useState(0);
   const [changes, setChanges] = useState([]);
 
   useEffect(() => {
+    // divinate!
     fetchRandomNumbers(USE_MOCKED_DATA).then(res => {
-      const { nowSequenceFuxi, futureSequenceFuxi, changes } = makeHexagrams(
-        res.data
-      );
-      setNowSequenceFuxi(nowSequenceFuxi);
-      setFutureSequenceFuxi(futureSequenceFuxi);
+      const { nowHexagram, futureHexagram, changes } = makeHexagrams(res.data);
+      setNowHexagram(nowHexagram);
+      setFutureHexagram(futureHexagram);
       setChanges(changes);
       setDisplayHexagrams(true);
     });
@@ -39,12 +38,8 @@ const App = () => {
           onExited={() => setTransition(false)}
         >
           <div style={{ display: "flex" }}>
-            <Hexagram initialFuxi={nowSequenceFuxi} changing={changes} />
-            <Hexagram
-              initialFuxi={futureSequenceFuxi}
-              interactive
-              withControls
-            />
+            <Hexagram initialFuxi={nowHexagram} changing={changes} />
+            <Hexagram initialFuxi={futureHexagram} />
           </div>
         </CSSTransition>
       </div>
@@ -52,4 +47,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Oracle;
