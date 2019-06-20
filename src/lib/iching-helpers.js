@@ -138,3 +138,10 @@ export const binaryToBool = arr => {
     return el === "1" ? true : false;
   });
 };
+
+
+export const boolToBinary = arr => {
+  return arr.map(el => {
+    return el === true ? "1" : "0";
+  });
+};
