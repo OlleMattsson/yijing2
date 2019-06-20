@@ -6,7 +6,7 @@ import { CSSTransition } from "react-transition-group";
 import Spinner from "./components/spinner/spinner";
 import "./App.css";
 
-const USE_MOCKED_DATA = true;
+const USE_MOCKED_DATA = false;
 
 const App = () => {
 
