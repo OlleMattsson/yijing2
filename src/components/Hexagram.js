@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Line from "./line/Line";
 import { Yin } from "./line/Yin";
 import { Yang } from "./line/Yang";
@@ -7,39 +7,55 @@ import {
   fuxiToBinary,
   binaryToKingWen,
   binaryToFuxi,
-  binaryToBool
+  binaryToBool,
+  boolToBinary
 } from "../lib/iching-helpers";
 import HexagramData from "./HexagramData";
 
 export const Hexagram = ({
-  fuxi,
-  interactive,
-  changing = new Array(6).fill(false),
-  withControls
+  initialFuxi, /* Number */
+  interactive, /* Bool */
+  changing = new Array(6).fill(false), /* Array */
+  withControls /* Bool */
 }) => {
+  /*
   const [sequence, setSequence] = useState(
-    binaryToBool(fuxiToBinary(fuxi || 0)) || new Array(6).fill(false) // broken: true / false
+    binaryToBool(fuxiToBinary(fuxi || 0)) // broken: true / false
   );
+  */
+
+  const [fuxi, setFuxi] = useState(initialFuxi || 0)
+
+
+  console.log("now rendering", fuxi)
+  console.log(fuxiToBinary(fuxi))
+  console.log("kingwen", binaryToKingWen(fuxiToBinary(fuxi)));
 
   const handleLineClick = index => {
-    const _sequence = [...sequence];
-    _sequence[index] = !_sequence[index];
-    setSequence(_sequence);
+    const currentBoolSequence = binaryToBool(fuxiToBinary(fuxi)) // number => |bool]
+    currentBoolSequence[index] = !currentBoolSequence[index];
+    const nextFuxi =  binaryToFuxi(boolToBinary(currentBoolSequence))// bool => number
+    setFuxi(nextFuxi);
   };
 
   const handlePrevClick = () => {
-    const prev = binaryToFuxi(sequence) - 1;
-    const prevBinary = fuxiToBinary(prev);
-    setSequence(binaryToBool(prevBinary));
+    if (fuxi === 0) {
+      setFuxi(63)
+      return;
+    }
+    setFuxi(fuxi-1);
   };
 
   const handleNextClick = () => {
-    const next = binaryToFuxi(sequence) + 1;
-    const nextBinary = fuxiToBinary(next);
-    setSequence(binaryToBool(nextBinary));
+    if (fuxi == 63) {
+      setFuxi(0)
+      return;
+    }
+    setFuxi(fuxi+1);
   };
 
   // do the reversing first, to avoid flickering
+  const sequence = binaryToBool(fuxiToBinary(fuxi))
   const reversedSequence = Array.from(sequence).reverse();
   const reversedChanging = Array.from(changing).reverse();
 
@@ -70,12 +86,12 @@ export const Hexagram = ({
   return (
     <div className="hexagram" style={{ flex: 1, margin: "10px" }}>
       {lines}
-      <div className="fuxiLabel">Fu Xi binary: {binaryToFuxi(sequence)}</div>
-      <div className="kingwenLabel">King Wen: {binaryToKingWen(sequence)}</div>
+      <div className="fuxiLabel">Fu Xi binary: {fuxi}</div>
+      <div className="kingwenLabel">King Wen: {binaryToKingWen(fuxiToBinary(fuxi))}</div>
 
       {withControls ? controls : null}
 
-      <HexagramData fuxi={binaryToFuxi(sequence)} />
+      <HexagramData fuxi={fuxi} />
     </div>
   );
 };
