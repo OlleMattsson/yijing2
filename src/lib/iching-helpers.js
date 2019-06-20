@@ -57,7 +57,7 @@ export const makeLineWithFourCoins = numbersArray => {
 
 export const makeFutureHexagram = nowSequence => {
   const futureSequence = [];
-  for (var i = nowSequence.length; i >= 0; i--) {
+  for (var i = nowSequence.length -1; i >= 0; i--) {
     switch (nowSequence[i]) {
       // --x--
       case 0:
