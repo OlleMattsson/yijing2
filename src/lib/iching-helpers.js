@@ -1,6 +1,5 @@
 import globals from "../globals";
 
-
 // Convert a hexagram's fuxi value to it's corresponding binary sequence
 // Number => BinarySequence<Array[Bool]>
 // 3 -> [0,0,0,0,1,1]
@@ -21,9 +20,7 @@ export const fuxiToBinary = fuxi => {
 // BinarySequence<Array[Bool]> => Number
 // [0,0,0,0,1,1] -> 3
 export const binaryToFuxi = source => {
-  return parseInt(
-    source.join(""), 2
-  );
+  return parseInt(source.join(""), 2);
 };
 
 // Convert a hexagram's binary sequence to it's corresponding king wen value
@@ -36,7 +33,6 @@ export const binaryToKingWen = source => {
     return kingWenSequence[binaryToFuxi(source)];
   }
 };
-
 
 // Make one of the hexagrams line with four random coin tosses from RNQG
 // Array[Number] => Number
@@ -57,7 +53,7 @@ export const makeLineWithFourCoins = numbersArray => {
 
 export const makeFutureHexagram = nowSequence => {
   const futureSequence = [];
-  for (var i = nowSequence.length -1; i >= 0; i--) {
+  for (var i = nowSequence.length - 1; i >= 0; i--) {
     switch (nowSequence[i]) {
       // --x--
       case 0:
@@ -138,7 +134,6 @@ export const binaryToBool = arr => {
     return el === "1" ? true : false;
   });
 };
-
 
 export const boolToBinary = arr => {
   return arr.map(el => {

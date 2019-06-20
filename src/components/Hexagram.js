@@ -13,47 +13,45 @@ import {
 import HexagramData from "./HexagramData";
 
 export const Hexagram = ({
-  initialFuxi, /* Number */
-  changing = new Array(6).fill(false), /* Array */
-  interactive, /* Bool */
+  initialFuxi /* Number */,
+  changing = new Array(6).fill(false) /* Array */,
+  interactive /* Bool */,
   withControls /* Bool */
 }) => {
-
   // Fuxi (number) internal state
-  const [fuxi, setFuxi] = useState(initialFuxi || 0)
+  const [fuxi, setFuxi] = useState(initialFuxi || 0);
 
   /*
     UI event Handlers
   */
   const handleLineClick = index => {
-    const currentBoolSequence = binaryToBool(fuxiToBinary(fuxi)) // number => |bool]
+    const currentBoolSequence = binaryToBool(fuxiToBinary(fuxi)); // number => |bool]
     currentBoolSequence[index] = !currentBoolSequence[index];
-    const nextFuxi =  binaryToFuxi(boolToBinary(currentBoolSequence))// bool => number
+    const nextFuxi = binaryToFuxi(boolToBinary(currentBoolSequence)); // bool => number
     setFuxi(nextFuxi);
   };
 
   const handlePrevClick = () => {
     if (fuxi === 0) {
-      setFuxi(63)
+      setFuxi(63);
       return;
     }
-    setFuxi(fuxi-1);
+    setFuxi(fuxi - 1);
   };
 
   const handleNextClick = () => {
     if (fuxi === 63) {
-      setFuxi(0)
+      setFuxi(0);
       return;
     }
-    setFuxi(fuxi+1);
+    setFuxi(fuxi + 1);
   };
 
-  
   //  Create sequence and reverse it for rendering
-  const sequence = binaryToBool(fuxiToBinary(fuxi))
+  const sequence = binaryToBool(fuxiToBinary(fuxi));
   const reversedSequence = Array.from(sequence).reverse();
   const reversedChanging = Array.from(changing).reverse();
-  
+
   // render the lines
   const lines = reversedSequence.map((isYang, index) => {
     const id = sequence.length - 1 - index;
@@ -83,7 +81,9 @@ export const Hexagram = ({
     <div className="hexagram" style={{ flex: 1, margin: "10px" }}>
       {lines}
       <div className="fuxiLabel">Fu Xi binary: {fuxi}</div>
-      <div className="kingwenLabel">King Wen: {binaryToKingWen(fuxiToBinary(fuxi))}</div>
+      <div className="kingwenLabel">
+        King Wen: {binaryToKingWen(fuxiToBinary(fuxi))}
+      </div>
       {withControls ? controls : null}
       <HexagramData fuxi={fuxi} />
     </div>

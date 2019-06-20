@@ -45,7 +45,10 @@ export default class HexagramData extends Component {
           return (
             <div>
               <p>{content.nameEng}</p>
-              <p dangerouslySetInnerHTML={{ __html: content.description }}  style={{fontSize: 15}}/>
+              <p
+                dangerouslySetInnerHTML={{ __html: content.description }}
+                style={{ fontSize: 15 }}
+              />
             </div>
           );
         }}
