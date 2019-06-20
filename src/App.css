@@ -10,6 +10,15 @@
   display: inline;
 }
 
+.nav li div {
+  display: inline;
+}
+
+.nav .active {
+  text-decoration: underline;
+}
+
+
 .nav a {
   text-decoration: none;
 }
