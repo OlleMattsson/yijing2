@@ -24,16 +24,21 @@ class App extends Component {
     };
   }
 
-  fetchRandomNumbers = async howmany => {
-    return mockedResponse;
+  fetchRandomNumbers = async (mocked = false) => {
+    const howMany = 24
+
+    if (mocked) {
+      return mockedResponse;
+    } 
+
     return await (await fetch(
-      "https://qrng.anu.edu.au/API/jsonI.php?length=" + howmany + "&type=uint8"
+      "https://qrng.anu.edu.au/API/jsonI.php?length=" + howMany + "&type=uint8"
     )).json();
   };
 
   async componentDidMount() {
     try {
-      this.fetchRandomNumbers(24).then(res => {
+      this.fetchRandomNumbers(false).then(res => {
         const randomNumbers = res.data;
         let nowSequence = [];
 
