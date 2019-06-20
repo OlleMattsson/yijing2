@@ -22,18 +22,13 @@ export const fuxiToBinary = fuxi => {
 // [0,0,0,0,1,1] -> 3
 export const binaryToFuxi = source => {
   return parseInt(
-    source
-      .map(isYang => {
-        return isYang ? 1 : 0;
-      })
-      .join(""),
-    2
+    source.join(""), 2
   );
 };
 
 // Convert a hexagram's binary sequence to it's corresponding king wen value
 // BinarySequence<Array[Bool]> => Number
-// [0,0,0,0,1,1] -> 20
+// [0,0,0,0,1,1] -> 2
 export const binaryToKingWen = source => {
   // source: Array[<Bool>]
   let kingWenSequence = globals.kingWenSequence;
@@ -140,6 +135,6 @@ export const getChanges = (now, future) => {
 // [0,0,0,0,1,1] => [true, true, true, true, false, false]
 export const binaryToBool = arr => {
   return arr.map(el => {
-    return el === "1" ? false : true;
+    return el === "1" ? true : false;
   });
 };
