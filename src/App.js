@@ -5,7 +5,8 @@ import {
   makeLineWithFourCoins,
   makeFutureHexagram,
   convertToBinarySequence,
-  getChanges
+  getChanges,
+  binaryToFuxi
 } from "./lib/iching-helpers";
 import { CSSTransition } from "react-transition-group";
 import Spinner from "./components/spinner/spinner";
@@ -50,18 +51,29 @@ class App extends Component {
           nowSequence[i] = makeLineWithFourCoins(arr);
         }
 
+
         futureSequence = makeFutureHexagram(nowSequence);
         nowSequenceBinary = convertToBinarySequence(nowSequence);
         futureSequenceBinary = convertToBinarySequence(futureSequence);
         changes = getChanges(nowSequenceBinary, futureSequenceBinary);
 
+        const nowSequenceFuxi = binaryToFuxi(nowSequenceBinary) // parseInt(nowSequenceBinary.join(""), 2)
+        const futureSequenceFuxi = binaryToFuxi(futureSequenceBinary) //parseInt(futureSequenceBinary.join(""), 2);
+
+
+
+
+        console.log("nowSequence", nowSequence, nowSequenceBinary, nowSequenceFuxi)
+        console.log("futureSequence", futureSequence, futureSequenceBinary, futureSequenceFuxi)
+        console.log("changes", changes)
+
         this.setState({
           nowSequence,
           futureSequence,
           nowSequenceBinary,
-          nowSequenceFuxi: parseInt(nowSequenceBinary.join(""), 2),
+          nowSequenceFuxi,
           futureSequenceBinary,
-          futureSequenceFuxi: parseInt(futureSequenceBinary.join(""), 2),
+          futureSequenceFuxi,
           changes,
           displayHexagrams: true
         });
@@ -84,12 +96,17 @@ class App extends Component {
             onExited={() => this.setState(p => ({ transition: false }))}
           >
             <div style={{ display: "flex" }}>
-              <Hexagram
-                fuxi={this.state.nowSequenceFuxi}
+
+
+               <Hexagram
+                initialFuxi={this.state.nowSequenceFuxi}
                 changing={this.state.changes}
-              />
+              />             
+
+
+
               <Hexagram
-                fuxi={this.state.futureSequenceFuxi}
+                initialFuxi={this.state.futureSequenceFuxi}
                 interactive
                 withControls
               />
