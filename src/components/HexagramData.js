@@ -37,7 +37,7 @@ export default class HexagramData extends Component {
           if (error) return <p>Error :(</p>;
 
           if (data.allHexagrams.length === 0) {
-            return <p>no data yet, sorry</p>;
+            return <p>Data missing</p>;
           }
 
           const content = data.allHexagrams[0];
@@ -45,7 +45,7 @@ export default class HexagramData extends Component {
           return (
             <div>
               <p>{content.nameEng}</p>
-              <p dangerouslySetInnerHTML={{ __html: content.description }} />
+              <p dangerouslySetInnerHTML={{ __html: content.description }}  style={{fontSize: 15}}/>
             </div>
           );
         }}
