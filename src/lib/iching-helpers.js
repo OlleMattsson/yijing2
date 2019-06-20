@@ -25,7 +25,7 @@ export const binaryToFuxi = source => {
 
 // Convert a hexagram's binary sequence to it's corresponding king wen value
 // BinarySequence<Array[Bool]> => Number
-// [0,0,0,0,1,1] -> 2
+// [0,0,0,0,1,1] -> 20
 export const binaryToKingWen = source => {
   // source: Array[<Bool>]
   let kingWenSequence = globals.kingWenSequence;
@@ -118,6 +118,7 @@ export const convertToBinarySequence = source => {
 };
 
 export const getChanges = (now, future) => {
+
   return now.map((now, i) => {
     if (now === future[i]) {
       return false;
@@ -140,3 +141,15 @@ export const boolToBinary = arr => {
     return el === true ? "1" : "0";
   });
 };
+
+
+
+
+  // [0, 1, 2, 3, 4, 5] => 32
+export const sequenceToFuxi = (sequence) => {
+  if(sequence && sequence.length === 6) {
+    const binary = convertToBinarySequence(sequence)
+    return binaryToFuxi(binary)
+  }
+    throw new Error("check sequence")
+}
