@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import Line from "./line/Line";
+import { Line } from "./line/Line";
 import { Yin } from "./line/Yin";
 import { Yang } from "./line/Yang";
 import globals from "../globals";
@@ -14,8 +14,8 @@ import HexagramData from "./HexagramData";
 
 export const Hexagram = ({
   initialFuxi, /* Number */
-  interactive, /* Bool */
   changing = new Array(6).fill(false), /* Array */
+  interactive, /* Bool */
   withControls /* Bool */
 }) => {
 
@@ -41,7 +41,7 @@ export const Hexagram = ({
   };
 
   const handleNextClick = () => {
-    if (fuxi == 63) {
+    if (fuxi === 63) {
       setFuxi(0)
       return;
     }
@@ -63,8 +63,8 @@ export const Hexagram = ({
         key={id}
         isYang={isYang}
         isChanging={reversedChanging[index]}
-        yin={props => <Yin {...props} />}
-        yang={props => <Yang {...props} />}
+        Yin={props => <Yin {...props} />}
+        Yang={props => <Yang {...props} />}
         color={globals.lineColor}
         changingColor={globals.lineColorChanging}
         onChange={interactive ? handleLineClick : () => {}}
